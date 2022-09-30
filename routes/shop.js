@@ -6,7 +6,10 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
     // res.sendFile(path.join(__dirname, '..', 'views', 'shop.html'));
-    res.render('shop', {pageTitle: 'Shop'})
+    res.render('shop', {
+        pageTitle: 'Shop',
+        products: adminData.products
+    })
 });
 
 
