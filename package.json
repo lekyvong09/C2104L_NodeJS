@@ -19,6 +19,7 @@
   "homepage": "https://github.com/lekyvong09/C2104L_NodeJS#readme",
   "dependencies": {
     "bootstrap": "^5.2.1",
+    "ejs": "^3.1.8",
     "express": "^4.18.1",
     "nodemon": "^2.0.20"
   }
