@@ -4,7 +4,7 @@ const path = require('path');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-
+const exceptionController = require('./controllers/exception-controller');
 const app = express();
 
 
@@ -23,10 +23,7 @@ app.set('views', 'views'); /// tell Express the place to look for the views
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-/// 404.html
-app.use((req, res, next) => {
-    res.render('404', {pageTitle: 'Page not found'});
-});
+app.use(exceptionController.handle404);
 
 
 app.listen(3001);
