@@ -20,7 +20,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'views'); /// tell Express the place to look for the views
 
 
-app.use('/admin', adminRoutes.routes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 /// 404.html
