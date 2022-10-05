@@ -14,11 +14,11 @@
                     <div class="card-header d-flex align-items-center" style="min-height: 65px;">
                       <%= product.title %> 
                     </div>
-                    <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+                    <img src="/<%= product.imageUrl %>" alt="<%= product.title %>" style="height: 300px;">
                     <div class="card-body">
-                      <h5 class="card-title">$19.50</h5>
+                      <h5 class="card-title"><%= product.price %> </h5>
                       <p class="card-text" style="max-width: 98%; max-height:48px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. In, qui officia aperiam laborum ad, vel sed enim maxime, odit necessitatibus quas deleniti magnam? Deserunt sunt possimus laudantium minima, laboriosam quos.
+                        <%= product.description %> 
                       </p>
                       <a href="#" class="btn btn-primary">Add to Cart</a>
                     </div>

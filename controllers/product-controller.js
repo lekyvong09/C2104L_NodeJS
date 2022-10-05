@@ -16,14 +16,15 @@ exports.insertNewProduct = (req, res, next) => {
     }
 
     const imageUrl = image.path;
-    const product = new Product(req.body.title, imageUrl);
+    const product = new Product(req.body.title, imageUrl, req.body.description, req.body.price);
     product.save();
     res.redirect('/');
 }
 
 
 exports.listProduct = (req, res, next) => {
-    res.render('admin/list-product', {pageTitle: 'List product'});
+    const products = Product.fetchAll()
+    res.render('admin/list-product', {pageTitle: 'List product', products: products});
 }
 
 exports.showEditProductForm = (req, res, next) => {

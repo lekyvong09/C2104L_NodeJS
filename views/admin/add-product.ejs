@@ -5,7 +5,19 @@
 
     <main class="d-flex flex-column container flex-grow-1">
         <form action="/admin/add-product" method="post" class="w-100 m-auto" style="max-width: 330px;" enctype="multipart/form-data">
-            <input type="text" class="form-control mb-3" name="title">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="product-title" placeholder="title" name="title">
+              <label for="product-title">Title</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="number" step="0.01" class="form-control" id="product-price" placeholder="price" name="price">
+              <label for="product-price">Price</label>
+            </div>
+            <div class="form-floating mb-3">
+              <textarea type="text" class="form-control" id="product-desc" placeholder="description" name="description" style="height: 100px;"></textarea>
+              <label for="product-desc">Description</label>
+            </div>
+
             <input type="file" class="form-control mb-3" name="image">
             <button class="btn btn-primary w-100" type="submit">Add Product</button>
         </form>
