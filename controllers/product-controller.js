@@ -9,7 +9,14 @@ exports.showAddProductForm = (req, res, next) => {
 
 
 exports.insertNewProduct = (req, res, next) => {
-    const product = new Product(req.body.title);
+    const image = req.file;
+    if (!image) {
+        res.redirect('/admin/add-product');
+        return;
+    }
+
+    const imageUrl = image.path;
+    const product = new Product(req.body.title, imageUrl);
     product.save();
     res.redirect('/');
 }

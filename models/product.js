@@ -1,8 +1,9 @@
 const products = [];
 
 module.exports = class Product {
-    constructor(title) {
+    constructor(title, imageUrl) {
         this.title = title;
+        this.imageUrl = imageUrl;
     }
 
     /// product1 = new Product('book 1');
