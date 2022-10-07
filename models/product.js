@@ -33,4 +33,11 @@ module.exports = class Product {
     static findById(id) {
         return products.find(product => product.id == id);
     }
+
+    static delete(id) {
+        const index = products.findIndex(i => i.id == id);
+        if (index > -1) {
+            products.splice(index, 1);
+        }
+    }
 }

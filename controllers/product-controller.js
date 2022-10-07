@@ -29,6 +29,7 @@ exports.listProduct = (req, res, next) => {
 
 exports.showEditProductForm = (req, res, next) => {
     const productId = req.params.productId;
+    console.log(productId);
     const product = Product.findById(productId);
     res.render('admin/edit-product', {
         pageTitle: 'Edit product',
@@ -51,5 +52,10 @@ exports.updateProduct = (req, res, next) => {
 
     const product = new Product(id, title, imageUrl, description, price);
     product.save();
+    res.redirect('/admin/list-product');
+}
+
+exports.deleteProduct = (req, res, next) => {
+    Product.delete(req.body.productId);
     res.redirect('/admin/list-product');
 }

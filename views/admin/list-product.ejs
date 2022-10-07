@@ -16,11 +16,17 @@
                             </div>
                             <img src="/<%= product.imageUrl %>" alt="<%= product.title %>" style="height: 300px;">
                             <div class="card-body">
-                            <h5 class="card-title"><%= product.price %> </h5>
-                            <p class="card-text" style="max-width: 98%; max-height:48px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                                <%= product.description %> 
-                            </p>
-                            <a href="/admin/edit-product/<%= product.id %> " class="btn btn-primary">Edit</a>
+                                <h5 class="card-title"><%= product.price %> </h5>
+                                <p class="card-text" style="max-width: 98%; max-height:48px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    <%= product.description %> 
+                                </p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+                                <a href="/admin/edit-product/<%= product.id %> " class="btn btn-primary" style="width: 100px;">Edit</a>
+                                <form action="/admin/delete-product" method="post">
+                                    <input type="hidden" name="productId" value="<%= product.id %>">
+                                    <button class="btn btn-primary" type="submit" style="width: 100px;">Delete</button>
+                                </form>
                             </div>
                         </article>
                         </div>
