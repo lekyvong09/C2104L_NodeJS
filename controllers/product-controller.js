@@ -16,9 +16,9 @@ exports.insertNewProduct = (req, res, next) => {
     }
 
     const imageUrl = image.path;
-    const product = new Product(req.body.title, imageUrl, req.body.description, req.body.price);
+    const product = new Product(null, req.body.title, imageUrl, req.body.description, req.body.price);
     product.save();
-    res.redirect('/');
+    res.redirect('/admin/list-product');
 }
 
 
@@ -28,9 +28,28 @@ exports.listProduct = (req, res, next) => {
 }
 
 exports.showEditProductForm = (req, res, next) => {
-    res.render('admin/edit-product', {pageTitle: 'Edit product'});
+    const productId = req.params.productId;
+    const product = Product.findById(productId);
+    res.render('admin/edit-product', {
+        pageTitle: 'Edit product',
+        product: product
+    });
 }
 
 exports.updateProduct = (req, res, next) => {
-    res.redirect('/');
+    let imageUrl = req.body.imageUrl;
+    const image = req.file;
+
+    if (image) {
+        imageUrl = image.path;
+    }
+
+    const id = req.body.productId;
+    const title = req.body.title;
+    const price = req.body.price;
+    const description = req.body.description;
+
+    const product = new Product(id, title, imageUrl, description, price);
+    product.save();
+    res.redirect('/admin/list-product');
 }
