@@ -6,6 +6,7 @@ const multer = require('multer');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const exceptionController = require('./controllers/exception-controller');
+const mongoConnect = require('./util/mongodb').mongoConnect;
 const app = express();
 
 
@@ -45,5 +46,6 @@ app.use(shopRoutes);
 
 app.use(exceptionController.handle404);
 
-
-app.listen(3001);
+mongoConnect(() => {
+    app.listen(3001);
+});
