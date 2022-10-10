@@ -1,43 +1,47 @@
-let products = [];
+const { getDb } = require("../util/mongodb");
+const mongodb = require('mongodb');
 
-module.exports = class Product {
-    constructor(id, title, imageUrl, description, price) {
-        this.id = id;
+
+class Product {
+    constructor(_id, title, price, description, imageUrl) {
+        this._id = _id;
         this.title = title;
-        this.imageUrl = imageUrl;
-        this.description = description;
         this.price = price;
+        this.description = description;
+        this.imageUrl = imageUrl;
     }
 
-    /// product1 = new Product('book 1');
-    /// product1.save() ==> products.push(product1)
     save() {
-        if (this.id) {
-            // update
-            const existingProductIndex = products.findIndex(product => product.id == this.id);
-            const updatedProduct = [...products];
-            updatedProduct[existingProductIndex] = {...this};
-            products = updatedProduct;
-        } else {
-            // insert new product
-            this.id = Math.random();
-            products.push(this);
-        }
+        const db = getDb();
+        return db.collection('products')
+                    .insertOne(this)
+                    .then(result => console.log(result))
+                    .catch(err => console.log(err));
     }
 
-    /// Product.fetchAll()
     static fetchAll() {
-        return products;
+        const db = getDb();
+        return db.collection('products')
+                    .find()
+                    .toArray()
+                    .then(product => {
+                        // console.log(product);
+                        return product;
+                    })
+                    .catch(err => console.log(err));
     }
 
-    static findById(id) {
-        return products.find(product => product.id == id);
-    }
-
-    static delete(id) {
-        const index = products.findIndex(i => i.id == id);
-        if (index > -1) {
-            products.splice(index, 1);
-        }
+    static findById(productId) {
+        const db = getDb();
+        return db.collection('products')
+                    .find({_id: new mongodb.ObjectId(productId) })
+                    .next()
+                    .then(product => {
+                        console.log(product);
+                        return product;
+                    })
+                    .catch(err => console.log(err));
     }
 }
+
+module.exports = Product;

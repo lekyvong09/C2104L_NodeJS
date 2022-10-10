@@ -16,46 +16,63 @@ exports.insertNewProduct = (req, res, next) => {
     }
 
     const imageUrl = image.path;
-    const product = new Product(null, req.body.title, imageUrl, req.body.description, req.body.price);
-    product.save();
-    res.redirect('/admin/list-product');
+    const title = req.body.title;
+    const price = req.body.price;
+    const description = req.body.description;
+
+    const product = new Product(title, price, description, imageUrl);
+    product.save()
+        .then(result => {
+            res.redirect('/admin/list-product');
+        })
+        .catch(err => console.log(err));
 }
 
 
 exports.listProduct = (req, res, next) => {
-    const products = Product.fetchAll()
-    res.render('admin/list-product', {pageTitle: 'List product', products: products});
+    Product.fetchAll()
+        .then(data => {
+            res.render('admin/list-product', {
+                pageTitle: 'List product', 
+                products: data
+            });
+        });
+    
 }
 
 exports.showEditProductForm = (req, res, next) => {
     const productId = req.params.productId;
     console.log(productId);
-    const product = Product.findById(productId);
-    res.render('admin/edit-product', {
-        pageTitle: 'Edit product',
-        product: product
-    });
+    Product.findById(productId)
+        .then(result => {
+            res.render('admin/edit-product', {
+                pageTitle: 'Edit product',
+                product: result
+            });
+        })
+        .catch(err => console.log(err));
+    
 }
 
-exports.updateProduct = (req, res, next) => {
-    let imageUrl = req.body.imageUrl;
-    const image = req.file;
+// exports.updateProduct = (req, res, next) => {
+//     let imageUrl = req.body.imageUrl;
+//     const image = req.file;
 
-    if (image) {
-        imageUrl = image.path;
-    }
+//     if (image) {
+//         imageUrl = image.path;
+//     }
 
-    const id = req.body.productId;
-    const title = req.body.title;
-    const price = req.body.price;
-    const description = req.body.description;
+//     const id = req.body.productId;
+//     const title = req.body.title;
+//     const price = req.body.price;
+//     const description = req.body.description;
 
-    const product = new Product(id, title, imageUrl, description, price);
-    product.save();
-    res.redirect('/admin/list-product');
-}
+//     const product = new Product(id, title, imageUrl, description, price);
+//     product.save();
+//     res.redirect('/admin/list-product');
+// }
 
-exports.deleteProduct = (req, res, next) => {
-    Product.delete(req.body.productId);
-    res.redirect('/admin/list-product');
-}
+// exports.deleteProduct = (req, res, next) => {
+//     Product.delete(req.body.productId);
+//     res.redirect('/admin/list-product');
+// }
