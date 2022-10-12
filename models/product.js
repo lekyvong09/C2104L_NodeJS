@@ -13,9 +13,14 @@ class Product {
 
     save() {
         const db = getDb();
-        return db.collection('products')
-                    .insertOne(this)
-                    .then(result => console.log(result))
+        let result;
+
+        if (this._id) {
+            result = db.collection('products').updateOne({_id: new mongodb.ObjectId(this._id)}, {$set: this});
+        } else {
+            result = db.collection('products').insertOne(this);
+        }
+        return result.then(result => console.log(result))
                     .catch(err => console.log(err));
     }
 
@@ -41,6 +46,14 @@ class Product {
                         return product;
                     })
                     .catch(err => console.log(err));
+    }
+
+    static deleteById(productId) {
+        const db = getDb();
+        return db.collection('products')
+            .deleteOne({_id: new mongodb.ObjectId(productId)})
+            .then(result => console.log('DELETED'))
+            .catch(err => console.log(err));
     }
 }
 
