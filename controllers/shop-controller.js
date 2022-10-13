@@ -12,10 +12,17 @@ exports.getProductList = (req, res, next) => {
         .catch(err => console.log(err));
 }
 
-exports.shoppingCart = (req, res, next) => {
-    res.render('shop/cart', {pageTitle: 'Shopping cart', path: '/cart'});
+exports.addItemToCart = (req, res, next) => {
+    const productId = req.body.productId;
+    Product.findById(productId)
+        .then(product => {
+            return req.user.addToCart(product);
+        }).then(result => {
+            console.log(result);
+        })
+        .catch(err => console.log(err));
 }
 
-exports.checkout = (req, res, next) => {
-    res.render('shop/checkout', {pageTitle: 'Checkout'});
-}
+// exports.checkout = (req, res, next) => {
+//     res.render('shop/checkout', {pageTitle: 'Checkout'});
+// }

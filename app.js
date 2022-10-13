@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const multer = require('multer');
+const User = require('./models/user');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
@@ -40,6 +41,16 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.set('view engine', 'ejs');
 app.set('views', 'views'); /// tell Express the place to look for the views
 
+app.use((req, res, next) => {
+    User.findById('6346d2aa0e639f13e7cf33d5')
+        .then(user => {
+            req.user = new User(user._id, user.name, user.email, user.cart);
+            // console.log('user', user._id);
+            // console.log('req.user', req.user);
+            next();
+        })
+        .catch(err => console.log(err));
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

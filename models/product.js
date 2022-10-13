@@ -4,7 +4,7 @@ const mongodb = require('mongodb');
 
 class Product {
     constructor(_id, title, price, description, imageUrl) {
-        this._id = _id;
+        this._id = _id ? new mongodb.ObjectId(_id) : null;
         this.title = title;
         this.price = price;
         this.description = description;
@@ -16,7 +16,7 @@ class Product {
         let result;
 
         if (this._id) {
-            result = db.collection('products').updateOne({_id: new mongodb.ObjectId(this._id)}, {$set: this});
+            result = db.collection('products').updateOne({_id: this._id}, {$set: this});
         } else {
             result = db.collection('products').insertOne(this);
         }

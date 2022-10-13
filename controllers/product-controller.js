@@ -68,7 +68,7 @@ exports.updateProduct = (req, res, next) => {
     const price = req.body.price;
     const description = req.body.description;
 
-    const product = new Product(new mongodb.ObjectId(id), title, price, description, imageUrl);
+    const product = new Product(id, title, price, description, imageUrl);
     product.save()
         .then(result => res.redirect('/admin/list-product'))
         .catch(err => console.log(err));
