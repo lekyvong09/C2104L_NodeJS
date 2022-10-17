@@ -4,6 +4,11 @@
     <%- include('../includes/navigation.ejs') %> 
     <main class="d-flex flex-column container flex-grow-1">
         <h1>Cart</h1>
+        <ul>
+            <% for (let item of cartItems) { %> 
+                <li><%= item.title %></li>
+            <% } %> 
+        </ul>
     </main>
 
     <%- include('../includes/footer.ejs') %> 

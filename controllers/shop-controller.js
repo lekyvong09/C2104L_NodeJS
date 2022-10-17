@@ -27,3 +27,14 @@ exports.addItemToCart = (req, res, next) => {
 // exports.checkout = (req, res, next) => {
 //     res.render('shop/checkout', {pageTitle: 'Checkout'});
 // }
+
+exports.displayShoppingCart = (req, res, next) => {
+    req.user.getCart()
+        .then(result => {
+            // console.log(result);
+            res.render('shop/cart', {
+                pageTitle: 'Cart',
+                cartItems: result
+            });
+        })
+}

@@ -21,8 +21,8 @@ class User {
 
     addToCart(product) {
         const db = getDb();
-        const updatedCartItems = [...this.cart.items];
-        const indexExistingCartItem = this.cart.items.findIndex(item => item.productId.toString() === product._id.toString());
+        const updatedCartItems = this.cart.items ? [...this.cart.items] : [];
+        const indexExistingCartItem = this.cart.items ? this.cart.items.findIndex(item => item.productId.toString() === product._id.toString()) : -1;
 
         let newQuantity = 1;
 
@@ -42,6 +42,23 @@ class User {
             {_id: new mongodb.ObjectId(this._id)},
             {$set: {cart: updatedCart}}
         );
+    }
+
+    getCart() {
+        const db = getDb();
+        const arrayOfProductId = this.cart.items ? this.cart.items.map(i => i.productId) : [];
+        
+        return db.collection('products')
+            .find({_id: {$in: arrayOfProductId}})
+            .toArray()
+            .then(
+                products => {
+                    return products.map(product => {
+                        let cartItem = this.cart.items.find(i => i.productId.toString() === product._id.toString());
+                        return {...product, quantity: cartItem.quantity};
+                    });
+                }
+            );
     }
 
     static findById(userId) {
