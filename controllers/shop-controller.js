@@ -19,6 +19,7 @@ exports.addItemToCart = (req, res, next) => {
             return req.user.addToCart(product);
         }).then(result => {
             console.log(result);
+            res.redirect('/');
         })
         .catch(err => console.log(err));
 }

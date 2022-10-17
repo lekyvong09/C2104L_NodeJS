@@ -8,7 +8,7 @@ class User {
         this._id = _id;
         this.name = name;
         this.email = email;
-        this.cart = cart; /// {items: []}
+        this.cart = cart ? cart : {items: []};
     }
 
     save() {
@@ -21,9 +21,23 @@ class User {
 
     addToCart(product) {
         const db = getDb();
-        const updatedCart = {items:[{...product, quantity: 1}]};
-        // console.log('updatedCart', updatedCart);
-        // Product.findById(product._id).then(product => console.log(product)).catch(err => console.log(err));
+        const updatedCartItems = [...this.cart.items];
+        const indexExistingCartItem = this.cart.items.findIndex(item => item.productId.toString() === product._id.toString());
+
+        let newQuantity = 1;
+
+        if (indexExistingCartItem != -1) {
+            newQuantity = this.cart.items[indexExistingCartItem].quantity + 1;
+            updatedCartItems[indexExistingCartItem].quantity = newQuantity;
+        } else {
+            updatedCartItems.push({
+                productId: new mongodb.ObjectId(product._id),
+                quantity: newQuantity
+            });
+        }
+
+        const updatedCart = {items: updatedCartItems};
+        // const updatedCart = {items:[{productId: new mongodb.ObjectId(product._id), quantity: 1}]};
         return db.collection('users').updateOne(
             {_id: new mongodb.ObjectId(this._id)},
             {$set: {cart: updatedCart}}

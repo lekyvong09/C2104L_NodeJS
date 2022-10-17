@@ -42,11 +42,10 @@ app.set('view engine', 'ejs');
 app.set('views', 'views'); /// tell Express the place to look for the views
 
 app.use((req, res, next) => {
-    User.findById('6346d2aa0e639f13e7cf33d5')
+    User.findById('634d5004430d0bbf8a9c7a21')
         .then(user => {
             req.user = new User(user._id, user.name, user.email, user.cart);
-            // console.log('user', user._id);
-            // console.log('req.user', req.user);
+            console.log('req.user', req.user);
             next();
         })
         .catch(err => console.log(err));
