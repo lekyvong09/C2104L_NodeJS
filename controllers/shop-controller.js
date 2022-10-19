@@ -46,3 +46,10 @@ exports.deleteItemFromCart = (req, res, next) => {
         .then(result => res.redirect('/cart'))
         .catch(err => console.log(err));
 }
+
+exports.checkout = (req, res, next) => {
+    req.user.checkout()
+        .then(result => res.redirect('/order'))
+        .catch(err => console.log(err));
+}
+
