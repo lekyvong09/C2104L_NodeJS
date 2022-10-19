@@ -1,14 +1,26 @@
 <%- include('../includes/head.ejs') %> 
+    <link rel="stylesheet" href="/css/cart.css">
 </head>
 <body class="vh-100 d-flex flex-column">
     <%- include('../includes/navigation.ejs') %> 
     <main class="d-flex flex-column container flex-grow-1">
-        <h1>Cart</h1>
         <ul>
             <% for (let item of cartItems) { %> 
-                <li><%= item.title %></li>
+                <li>
+                    <img class="product-image" src="/<%= item.imageUrl %>" alt="">
+                    <div class="product-info flex-grow-1">
+                        <a href="#" class="product-link"><%= item.title %></a>
+                        <p class="product-quantity">Quantity: <%= item.quantity %></p>
+                    </div>
+                    <form action="" method="post">
+                        <button type="submit"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                </li>
             <% } %> 
         </ul>
+        <form action="" method="post">
+            <button type="submit">Checkout</button>
+        </form>
     </main>
 
     <%- include('../includes/footer.ejs') %> 
