@@ -14,7 +14,8 @@
                         <a href="#" class="product-link"><%= item.title %></a>
                         <p class="product-quantity">Quantity: <%= item.quantity %></p>
                     </div>
-                    <form action="" method="post" class="d-flex align-items-center">
+                    <form action="/cart-delete-item" method="post" class="d-flex align-items-center">
+                        <input type="hidden" name="productId" value="<%= item._id %>">
                         <button type="submit" class="btn me-3"><i class="fa-solid fa-trash fa-lg text-danger"></i></button>
                     </form>
                 </li>

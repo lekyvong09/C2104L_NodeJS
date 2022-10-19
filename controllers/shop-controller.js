@@ -18,8 +18,8 @@ exports.addItemToCart = (req, res, next) => {
         .then(product => {
             return req.user.addToCart(product);
         }).then(result => {
-            console.log(result);
-            res.redirect('/');
+            // console.log(result);
+            res.redirect('/cart');
         })
         .catch(err => console.log(err));
 }
@@ -37,4 +37,12 @@ exports.displayShoppingCart = (req, res, next) => {
                 cartItems: result
             });
         })
+}
+
+
+exports.deleteItemFromCart = (req, res, next) => {
+    const productId = req.body.productId;
+    req.user.deleteItemFromCart(productId)
+        .then(result => res.redirect('/cart'))
+        .catch(err => console.log(err));
 }

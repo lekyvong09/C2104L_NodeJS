@@ -42,7 +42,7 @@ class Product {
                     .find({_id: new mongodb.ObjectId(productId) })
                     .next()
                     .then(product => {
-                        console.log(product);
+                        // console.log(product);
                         return product;
                     })
                     .catch(err => console.log(err));

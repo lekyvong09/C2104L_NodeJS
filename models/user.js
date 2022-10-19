@@ -1,4 +1,5 @@
 const mongodb = require('mongodb');
+const { deleteItemFromCart } = require('../controllers/shop-controller');
 const { getDb } = require('../util/mongodb');
 const Product = require('./product');
 
@@ -59,6 +60,16 @@ class User {
                     });
                 }
             );
+    }
+
+    deleteItemFromCart(productId) {
+        const db = getDb();
+        const updatedCartItems = this.cart.items.filter(item => item.productId.toString() !== productId);
+
+        return db.collection('users').updateOne(
+            {_id: new mongodb.ObjectId(this._id)},
+            { $set: {cart: {items: updatedCartItems}}}
+        );
     }
 
     static findById(userId) {

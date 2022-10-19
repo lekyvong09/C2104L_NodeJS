@@ -43,7 +43,7 @@ exports.listProduct = (req, res, next) => {
 
 exports.showEditProductForm = (req, res, next) => {
     const productId = req.params.productId;
-    console.log(productId);
+    // console.log(productId);
     Product.findById(productId)
         .then(result => {
             res.render('admin/edit-product', {
