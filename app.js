@@ -54,7 +54,7 @@ app.set('views', 'views'); /// tell Express the place to look for the views
 // });
 
 app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use(shopRoutes);
 
 app.use(exceptionController.handle404);
 

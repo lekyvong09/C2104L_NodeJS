@@ -36,30 +36,31 @@ exports.insertNewProduct = (req, res, next) => {
 }
 
 
-// exports.listProduct = (req, res, next) => {
-//     Product.fetchAll()
-//         .then(data => {
-//             res.render('admin/list-product', {
-//                 pageTitle: 'List product', 
-//                 products: data
-//             });
-//         });
+exports.listProduct = (req, res, next) => {
+    Product.find()
+        .then(data => {
+            res.render('admin/list-product', {
+                pageTitle: 'List product', 
+                products: data
+            });
+        })
+        .catch(err => console.log(err));
 
-// }
+}
 
-// exports.showEditProductForm = (req, res, next) => {
-//     const productId = req.params.productId;
-//     // console.log(productId);
-//     Product.findById(productId)
-//         .then(result => {
-//             res.render('admin/edit-product', {
-//                 pageTitle: 'Edit product',
-//                 product: result
-//             });
-//         })
-//         .catch(err => console.log(err));
+exports.showEditProductForm = (req, res, next) => {
+    const productId = req.params.productId;
+    // console.log(productId);
+    Product.findById(productId)
+        .then(result => {
+            res.render('admin/edit-product', {
+                pageTitle: 'Edit product',
+                product: result
+            });
+        })
+        .catch(err => console.log(err));
     
-// }
+}
 
 // exports.updateProduct = (req, res, next) => {
 //     let imageUrl = req.body.imageUrl;
