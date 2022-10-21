@@ -62,24 +62,31 @@ exports.showEditProductForm = (req, res, next) => {
     
 }
 
-// exports.updateProduct = (req, res, next) => {
-//     let imageUrl = req.body.imageUrl;
-//     const image = req.file;
+exports.updateProduct = (req, res, next) => {
+    let imageUrl = req.body.imageUrl;
+    const image = req.file;
 
-//     if (image) {
-//         imageUrl = image.path;
-//     }
+    if (image) {
+        imageUrl = image.path;
+    }
 
-//     const id = req.body.productId;
-//     const title = req.body.title;
-//     const price = req.body.price;
-//     const description = req.body.description;
+    const id = req.body.productId;
+    const title = req.body.title;
+    const price = req.body.price;
+    const description = req.body.description;
 
-//     const product = new Product(id, title, price, description, imageUrl);
-//     product.save()
-//         .then(result => res.redirect('/admin/list-product'))
-//         .catch(err => console.log(err));
-// }
+    Product.findById(id)
+        .then(product => {
+            product.title = title;
+            product.price = price;
+            product.description = description;
+            product.imageUrl = imageUrl;
+
+            return product.save();
+        })
+        .then(() => res.redirect('/admin/list-product'))
+        .catch(err => console.log(err));
+}
 
 // exports.deleteProduct = (req, res, next) => {
 //     Product.deleteById(req.body.productId)
