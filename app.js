@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const multer = require('multer');
-// const User = require('./models/user');
+const User = require('./models/user')
 const mongoose = require ('mongoose');
 
 const adminRoutes = require('./routes/admin');
@@ -43,15 +43,15 @@ app.use('/css', express.static(path.join(__dirname, 'public', 'css')));
 app.set('view engine', 'ejs');
 app.set('views', 'views'); /// tell Express the place to look for the views
 
-// app.use((req, res, next) => {
-//     User.findById('634d5004430d0bbf8a9c7a21')
-//         .then(user => {
-//             req.user = new User(user._id, user.name, user.email, user.cart);
-//             // console.log('req.user', req.user);
-//             next();
-//         })
-//         .catch(err => console.log(err));
-// });
+app.use((req, res, next) => {
+    User.findById('6352a3d3970f2e6b0e1967e9')
+        .then(user => {
+            req.user = user;
+            /// console.log('req.user', req.user);
+            next();
+        })
+        .catch(err => console.log(err));
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
