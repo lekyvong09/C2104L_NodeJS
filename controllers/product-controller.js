@@ -88,8 +88,8 @@ exports.updateProduct = (req, res, next) => {
         .catch(err => console.log(err));
 }
 
-// exports.deleteProduct = (req, res, next) => {
-//     Product.deleteById(req.body.productId)
-//         .then(result => res.redirect('/admin/list-product'))
-//         .catch(err => console.log(err));
-// }
+exports.deleteProduct = (req, res, next) => {
+    Product.findByIdAndDelete(req.body.productId)
+        .then(result => res.redirect('/admin/list-product'))
+        .catch(err => console.log(err));
+}
